@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { axiosInstanse } from "../config/axios";
+import { v4 } from "uuid";
 
 const Weather = ({ currentCity }) => {
   const [weather, setWeather] = useState(null);
@@ -52,15 +53,18 @@ const Weather = ({ currentCity }) => {
       <div className="flex gap-2 flex-wrap items-center justify-center">
         {weather?.weather
           ? weather?.weather.map((dayWeather, index) => (
-              <>
+              <div key={v4()} className="w-full">
                 {index % 24 === 0 && (
-                  <div className="w-full text-center underline text-xl">
+                  <div
+                    key={v4()}
+                    className="w-full text-center underline text-xl py-2"
+                  >
                     {new Date(dayWeather.time).toLocaleDateString()}
                   </div>
                 )}
                 <div
-                  key={index}
-                  className="p-2 border w-2/5 relative rounded-lg"
+                  key={v4()}
+                  className="p-2 border w-full relative rounded-lg"
                 >
                   <p>Date: {new Date(dayWeather.time).toLocaleDateString()}</p>
                   <p>Time: {new Date(dayWeather.time).toLocaleTimeString()}</p>
@@ -73,7 +77,7 @@ const Weather = ({ currentCity }) => {
                     className="absolute h-10 top-5 right-5"
                   />
                 </div>
-              </>
+              </div>
             ))
           : "Loading..."}
       </div>
